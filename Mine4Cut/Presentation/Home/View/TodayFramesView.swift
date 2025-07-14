@@ -8,47 +8,53 @@
 import SwiftUI
 
 struct TodayFramesView: View {
-    let frameInfos: [FrameInfo]
+    let frameInfos: [FrameInfo] = FrameInfo.mockFrames
+    let parentSize: CGSize
     
-    // MARK: - mockFrame
-    init(frameInfos: [FrameInfo] = FrameInfo.mockFrames) {
-        self.frameInfos = frameInfos
+    init(parentSize: CGSize) {
+        self.parentSize = parentSize
     }
     
     var body: some View {
-        GeometryReader { geometry in
-            VStack(
-                alignment: .leading,
-                spacing: 12
+        let imageHeight = FrameSize.medium.height(parentSize.width)
+        
+        // total = imageHeight + text
+        let totalHeight = imageHeight + 48
+        
+        VStack(
+            alignment: .leading,
+            spacing: 12
+        ) {
+            // Text
+            HStack {
+                Text("오늘의 추천 프레임은?")
+                    .fontWeight(.bold)
+                Spacer()
+            }
+            
+            // Card List
+            ScrollView(
+                .horizontal,
+                showsIndicators: false
             ) {
-                HStack {
-                    Text("오늘의 추천 프레임은?")
-                        .fontWeight(.bold)
-                    Spacer()
-                }
-                
-                ScrollView(
-                    .horizontal,
-                    showsIndicators: false
-                ) {
-                    HStack(spacing: 12) {
-                        ForEach(frameInfos.indices, id: \.self) { index in
-                            FrameImageView(
-                                frame: frameInfos[index],
-                                size: .medium,
-                                screenWidth: geometry.size.width
-                            )
-                        }
+                HStack(spacing: 12) {
+                    ForEach(frameInfos.indices, id: \.self) { index in
+                        FrameImageView(
+                            frame: frameInfos[index],
+                            size: .medium,
+                            screenWidth: parentSize.width
+                        )
                     }
                 }
             }
         }
-        // TODO: Constant로 수정
-        .frame(height: 180)
+        .frame(height: totalHeight)
+        .padding(.leading, 16)
     }
 }
 
 #Preview {
-    TodayFramesView()
-        .padding()
+    GeometryReader { geometry in
+        TodayFramesView(parentSize: geometry.size)
+    }
 }

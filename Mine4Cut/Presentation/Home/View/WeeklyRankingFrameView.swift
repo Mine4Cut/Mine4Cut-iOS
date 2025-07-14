@@ -8,51 +8,54 @@
 import SwiftUI
 
 struct WeeklyRankingFrameView: View {
-    let frameInfos: [FrameInfo]
+    let frameInfos: [FrameInfo] = FrameInfo.mockFrames
+    let parentSize: CGSize
     
-    // MARK: - mockFrame
-    init(frameInfos: [FrameInfo] = FrameInfo.mockFrames) {
-        self.frameInfos = frameInfos
+    init(parentSize: CGSize) {
+        self.parentSize = parentSize
     }
     
     var body: some View {
-        GeometryReader { geometry in
-            VStack(
-                alignment: .leading,
-                spacing: 12
+        let imageHeight = FrameSize.medium.height(parentSize.width)
+        
+        // total: 44 + List height
+        let totalHeight = 44 + imageHeight 
+        
+        VStack(
+            alignment: .leading,
+            spacing: 12
+        ) {
+            HStack {
+                Text("이번주 인기 프레임 TOP 3")
+                    .fontWeight(.bold)
+                Spacer()
+            }
+            
+            ScrollView(
+                .horizontal,
+                showsIndicators: false
             ) {
-                HStack {
-                    Text("이번주 인기 프레임 TOP 3")
-                        .fontWeight(.bold)
-                    Spacer()
-                }
-                
-                ScrollView(
-                    .horizontal,
-                    showsIndicators: false
-                ) {
-                    HStack(spacing: 12) {
-                        ForEach(frameInfos.indices, id: \.self) { idx in
-                            FrameImageView(
-                                frame: frameInfos[idx],
-                                size: .medium,
-                                screenWidth: geometry.size.width
-                            )
-                            .overlay (
-                                Group {
-                                    if idx >= 0 && idx <= 2 {
-                                        medalOverlay(for: idx)
-                                    }
-                                },
-                                alignment: .bottomTrailing
-                            )
-                        }
+                HStack(spacing: 12) {
+                    ForEach(frameInfos.indices, id: \.self) { idx in
+                        FrameImageView(
+                            frame: frameInfos[idx],
+                            size: .medium,
+                            screenWidth: parentSize.width
+                        )
+                        .overlay (
+                            Group {
+                                if idx >= 0 && idx <= 2 {
+                                    medalOverlay(for: idx)
+                                }
+                            },
+                            alignment: .bottomTrailing
+                        )
                     }
                 }
             }
         }
-        // TODO: Constant로 수정
-        .frame(height: 180)
+        .frame(height: totalHeight)
+        .padding(.leading, 16)
     }
     
     // TODO: - 서버에서 rank 정보 넘겨줄 때 확정
@@ -72,7 +75,8 @@ struct WeeklyRankingFrameView: View {
     }
 }
 
-#Preview {
-    WeeklyRankingFrameView()
-        .padding()
-}
+//#Preview {
+//    GeometryReader { geometry in
+//        WeeklyRankingFrameView(parentSize: geometry.size)
+//    }
+//}

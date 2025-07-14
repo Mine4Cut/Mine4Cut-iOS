@@ -9,23 +9,27 @@ import SwiftUI
 
 struct HomeView: View {
     var body: some View {
-        ScrollView {
-            VStack(
-                alignment: .leading,
-                spacing: 30
-            ) {
-                // 추천 프레임 화면
-                TodayFramesView()
-                
-                // 이번주 인기 프레임
-                WeeklyRankingFrameView()
-                
-                // 지금 가장 많이 사용한 프레임은?
-                TrendingFrameView()
+        // TODO: Navigation
+        GeometryReader { geometry in
+            ScrollView(showsIndicators: false) {
+                VStack(
+                    alignment: .leading
+                ) {
+                    // 추천 프레임 화면
+                    TodayFramesView(parentSize: geometry.size)
+                    
+                    // 이번주 인기 프레임
+                    WeeklyRankingFrameView(parentSize: geometry.size)
+                    
+                    // 지금 가장 많이 사용한 프레임은?
+                    TrendingFrameView(parentSize: geometry.size)
+                    
+                    // 이 프레임 어때요?
+                    PersonalFrameView(parentSize: geometry.size)
+                }
+                .frame(maxWidth: .infinity)
             }
-            .frame(maxWidth: .infinity)
         }
-        .padding()
     }
 }
 
