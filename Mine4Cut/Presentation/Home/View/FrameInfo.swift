@@ -38,11 +38,18 @@ struct FrameInfo {
     let imageURL: String
     let title: String
     let description: String
+    let rank: Int?
     
-    init(imageURL: String, title: String, description: String) {
+    init(
+        imageURL: String,
+        title: String,
+        description: String,
+        rank: Int? = nil
+    ) {
         self.imageURL = imageURL
         self.title = title
         self.description = description
+        self.rank = rank
     }
 }
 
@@ -51,7 +58,8 @@ extension FrameInfo {
         FrameInfo(
             imageURL: "placeholder_\(idx+1)",
             title: "Frame \(idx+1)",
-            description: "Description \(idx+1)"
+            description: "Description \(idx+1)",
+            rank: idx
         )
     }
 }
