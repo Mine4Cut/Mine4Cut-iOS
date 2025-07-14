@@ -38,27 +38,35 @@ struct FrameInfo {
     let imageURL: String
     let title: String
     let description: String
+    let creator: String
+    let downloads: Int
     let rank: Int?
     
     init(
         imageURL: String,
         title: String,
         description: String,
+        creator: String,
+        downloads: Int,
         rank: Int? = nil
     ) {
         self.imageURL = imageURL
         self.title = title
         self.description = description
+        self.creator = creator
+        self.downloads = downloads
         self.rank = rank
     }
 }
 
 extension FrameInfo {
-    static let mockFrames: [FrameInfo] = Array(0..<10).map { idx in
+    static let mockFrames: [FrameInfo] = Array(0..<5).map { idx in
         FrameInfo(
             imageURL: "placeholder_\(idx+1)",
             title: "Frame \(idx+1)",
             description: "Description \(idx+1)",
+            creator: "PSG \(idx+1)",
+            downloads: idx,
             rank: idx
         )
     }
