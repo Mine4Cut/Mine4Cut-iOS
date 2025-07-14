@@ -59,8 +59,9 @@ struct FrameInfo {
     }
 }
 
+// MARK: - Mock
 extension FrameInfo {
-    static let mockFrames: [FrameInfo] = Array(0..<5).map { idx in
+    static let mockFrames: [FrameInfo] = Array(0..<8).map { idx in
         FrameInfo(
             imageURL: "placeholder_\(idx+1)",
             title: "Frame \(idx+1)",

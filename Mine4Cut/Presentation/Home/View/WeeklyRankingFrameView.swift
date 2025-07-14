@@ -27,7 +27,7 @@ struct WeeklyRankingFrameView: View {
         ) {
             HStack {
                 Text("이번주 인기 프레임 TOP 3")
-                    .fontWeight(.bold)
+                    .font(.system(size: 16, weight: .bold))
                 Spacer()
             }
             
@@ -75,8 +75,8 @@ struct WeeklyRankingFrameView: View {
     }
 }
 
-//#Preview {
-//    GeometryReader { geometry in
-//        WeeklyRankingFrameView(parentSize: geometry.size)
-//    }
-//}
+#Preview {
+    GeometryReader { geometry in
+        WeeklyRankingFrameView(parentSize: geometry.size)
+    }
+}

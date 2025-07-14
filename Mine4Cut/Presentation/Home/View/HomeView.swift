@@ -13,7 +13,8 @@ struct HomeView: View {
         GeometryReader { geometry in
             ScrollView(showsIndicators: false) {
                 VStack(
-                    alignment: .leading
+                    alignment: .leading,
+                    spacing: 16
                 ) {
                     // 추천 프레임 화면
                     TodayFramesView(parentSize: geometry.size)

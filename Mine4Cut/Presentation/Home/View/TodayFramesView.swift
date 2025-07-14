@@ -19,7 +19,7 @@ struct TodayFramesView: View {
         let imageHeight = FrameSize.medium.height(parentSize.width)
         
         // total = imageHeight + text
-        let totalHeight = imageHeight + 48
+        let totalHeight = imageHeight + 44
         
         VStack(
             alignment: .leading,
@@ -28,7 +28,7 @@ struct TodayFramesView: View {
             // Text
             HStack {
                 Text("오늘의 추천 프레임은?")
-                    .fontWeight(.bold)
+                    .font(.system(size: 16, weight: .bold))
                 Spacer()
             }
             

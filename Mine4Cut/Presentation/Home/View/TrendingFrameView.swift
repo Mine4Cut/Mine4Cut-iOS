@@ -29,7 +29,7 @@ struct TrendingFrameView: View {
             // Text
             HStack {
                 Text("지금 가장 많이 사용한 프레임은?")
-                    .fontWeight(.bold)
+                    .font(.system(size: 16, weight: .bold))
                 Spacer()
             }
             .padding(.horizontal)
