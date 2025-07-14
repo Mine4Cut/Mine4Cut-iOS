@@ -24,21 +24,37 @@ struct FrameImageView: View {
     }
     
     var body: some View {
-        AsyncImage(url: URL(string: frame.imageURL)) { image in
-            image
-                .resizable()
-                .frame(
-                    width: size.width(screenWidth),
-                    height: size.height(screenWidth)
-                )
-                .clipped()
-        } placeholder: {
-            Rectangle()
-                .fill(Color.gray.opacity(0.3))
-                .frame(
-                    width: size.width(screenWidth),
-                    height: size.height(screenWidth)
-                )
+        // TODO: case 처리
+        AsyncImage(url: URL(string: frame.imageURL)) { phase in
+            switch phase {
+            case .success(let image):
+                image
+                    .resizable()
+                    .frame(
+                        width: size.width(screenWidth),
+                        height: size.height(screenWidth)
+                    )
+                    .clipped()
+            case .failure(_):
+                // TODO: 에러 발생시
+                Rectangle()
+                    .fill(Color.gray.opacity(0.3))
+                    .frame(
+                        width: size.width(screenWidth),
+                        height: size.height(screenWidth)
+                    )
+            case .empty:
+                // TODO: ProgessView
+                Rectangle()
+                    .fill(Color.gray.opacity(0.3))
+                    .frame(
+                        width: size.width(screenWidth),
+                        height: size.height(screenWidth)
+                    )
+            @unknown default:
+                // TODO: etc
+                EmptyView()
+            }
         }
         .cornerRadius(8)
     }
