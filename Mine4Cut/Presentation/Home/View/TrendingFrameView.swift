@@ -11,16 +11,6 @@ struct TrendingFrameView: View {
     // TODO: 서버로부터 받는 데이터
     let frameInfos: [FrameInfo] = FrameInfo.mockFrames
     
-    private let parentSize: CGSize
-    private let rowHeight:CGFloat
-    private let totalHeight: CGFloat
-    
-    init(parentSize: CGSize) {
-        self.parentSize = parentSize
-        self.rowHeight  = FrameSize.small.height(parentSize.width)
-        self.totalHeight  = 44 + (rowHeight + 5) * CGFloat(frameInfos.count)
-    }
-    
     var body: some View {
         VStack(
             alignment: .leading,
@@ -39,8 +29,8 @@ struct TrendingFrameView: View {
                 HStack(spacing: 12) {
                     FrameImageView(
                         frame: frameInfos[idx],
-                        size: .small,
-                        screenWidth: parentSize.width
+                        width: 60,
+                        height: 80
                     )
                     
                     // TODO: - Font 설정이 안되서 spacing 5 -> 2
@@ -65,7 +55,7 @@ struct TrendingFrameView: View {
                     
                     Spacer()
                 }
-                .frame(height: rowHeight)
+                .frame(height: 80)
                 // List Style 설정
                 .listRowSeparator(.hidden)
                 .listRowInsets(EdgeInsets(top: 2.5, leading: 20, bottom: 2.5, trailing: 20))
@@ -73,12 +63,10 @@ struct TrendingFrameView: View {
             .listStyle(.plain)
             .scrollDisabled(true)
         }
-        .frame(height: totalHeight)
+        .frame(height: 44 + (80 + 5) * CGFloat(frameInfos.count))
     }
 }
 
 #Preview {
-    GeometryReader { geometry in
-        TrendingFrameView(parentSize: geometry.size)
-    }
+    TrendingFrameView()
 }

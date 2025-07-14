@@ -10,50 +10,46 @@ import SwiftUI
 struct PersonalFrameView: View {
     let frameInfos: [FrameInfo] = FrameInfo.mockFrames
     
-    private let parentSize: CGSize
-    private let gridSpacing: CGFloat = 16
+    private let itemWidth = (UIApplication.screenWidth - 32 - 16) / 2
+    private let itemHeight = ((UIApplication.screenWidth - 32 - 16) / 2) * 1.4
     
-    private let columns = [
-        GridItem(.flexible(), spacing: 16),
-        GridItem(.flexible())
-    ]
+    private var columns: [GridItem] {
+        [
+            GridItem(.fixed(itemWidth)),
+            GridItem(.fixed(itemWidth))
+        ]
+    }
     
-    init(parentSize: CGSize) {
-        self.parentSize = parentSize
+    private var calculatedHeight: CGFloat {
+        let rowCount = (frameInfos.count + 1) / 2
+        return 80 + (itemHeight * CGFloat(rowCount)) + (16 * CGFloat(rowCount - 1))
     }
     
     var body: some View {
-        
-        ScrollView(showsIndicators: false) {
-            VStack(
-                alignment: .leading,
-                spacing: 4
-            ) {
-                Text("이 프레임은 어때요?")
-                    .font(.system(size: 16, weight: .bold))
-                
-                Text("선호장르를 기반으로 추천해드려요")
-                    .font(.system(size: 14))
-                    .foregroundColor(.gray)
-                    .padding(.bottom, 8)
-                
-                LazyVGrid(columns: columns, spacing: gridSpacing) {
-                    ForEach(frameInfos.indices, id: \.self) { idx in
-                        FrameImageView(
-                            frame: frameInfos[idx],
-                            size: .large,
-                            screenWidth: parentSize.width
-                        )
-                    }
+        VStack(alignment: .leading, spacing: 4) {
+            Text("이 프레임은 어때요?")
+                .font(.system(size: 28, weight: .bold))
+                .padding(.top, 8)
+            Text("선호장르를 기반으로 추천해드려요")
+                .font(.system(size: 16))
+                .foregroundColor(.gray)
+                .padding(.bottom, 8)
+            
+            LazyVGrid(columns: columns, spacing: 16) {
+                ForEach(frameInfos.indices, id: \.self) { idx in
+                    FrameImageView(
+                        frame: frameInfos[idx],
+                        width: itemWidth,
+                        height: itemHeight
+                    )
                 }
             }
-            .padding(.horizontal)
         }
+        .padding(.horizontal)
+        .frame(height: calculatedHeight)
     }
 }
 
 #Preview {
-    GeometryReader { geometry in
-        PersonalFrameView(parentSize: geometry.size)
-    }
+    PersonalFrameView()
 }

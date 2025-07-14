@@ -10,16 +10,6 @@ import SwiftUI
 struct TodayFramesView: View {
     let frameInfos: [FrameInfo] = FrameInfo.mockFrames
     
-    private let parentSize: CGSize
-    private let imageHeight: CGFloat
-    private let totalHeight: CGFloat
-    
-    init(parentSize: CGSize) {
-        self.parentSize = parentSize
-        self.imageHeight = FrameSize.medium.height(parentSize.width)
-        self.totalHeight = imageHeight + 44 // Text Height
-    }
-    
     var body: some View {
         VStack(
             alignment: .leading,
@@ -41,20 +31,18 @@ struct TodayFramesView: View {
                     ForEach(frameInfos.indices, id: \.self) { index in
                         FrameImageView(
                             frame: frameInfos[index],
-                            size: .medium,
-                            screenWidth: parentSize.width
+                            width: 100,
+                            height: 140
                         )
                     }
                 }
             }
         }
-        .frame(height: totalHeight)
+        .frame(height: 140 + 44)
         .padding(.leading, 16)
     }
 }
 
 #Preview {
-    GeometryReader { geometry in
-        TodayFramesView(parentSize: geometry.size)
-    }
+    TodayFramesView()
 }

@@ -10,16 +10,6 @@ import SwiftUI
 struct WeeklyRankingFrameView: View {
     let frameInfos: [FrameInfo] = FrameInfo.mockFrames
     
-    private let parentSize: CGSize
-    private let imageHeight: CGFloat
-    private let totalHeight: CGFloat
-    
-    init(parentSize: CGSize) {
-        self.parentSize = parentSize
-        self.imageHeight  = FrameSize.medium.height(parentSize.width)
-        self.totalHeight = imageHeight + 44
-    }
-    
     var body: some View {
         VStack(
             alignment: .leading,
@@ -39,8 +29,8 @@ struct WeeklyRankingFrameView: View {
                     ForEach(frameInfos.indices, id: \.self) { idx in
                         FrameImageView(
                             frame: frameInfos[idx],
-                            size: .medium,
-                            screenWidth: parentSize.width
+                            width: 100,
+                            height: 140
                         )
                         .overlay (
                             Group {
@@ -54,7 +44,7 @@ struct WeeklyRankingFrameView: View {
                 }
             }
         }
-        .frame(height: totalHeight)
+        .frame(height: 140 + 44)
         .padding(.leading, 16)
     }
     
@@ -76,7 +66,5 @@ struct WeeklyRankingFrameView: View {
 }
 
 #Preview {
-    GeometryReader { geometry in
-        WeeklyRankingFrameView(parentSize: geometry.size)
-    }
+    WeeklyRankingFrameView()
 }

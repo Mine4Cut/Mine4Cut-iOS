@@ -10,17 +10,17 @@ import SwiftUI
 // MARK: - FrameInfo로 View 생성
 struct FrameImageView: View {
     let frame: FrameInfo
-    let size: FrameSize
-    let screenWidth: CGFloat
+    let width: CGFloat
+    let height: CGFloat
     
     init(
         frame: FrameInfo,
-        size: FrameSize,
-        screenWidth: CGFloat
+        width: CGFloat,
+        height: CGFloat
     ) {
         self.frame = frame
-        self.size = size
-        self.screenWidth = screenWidth
+        self.width = width
+        self.height = height
     }
     
     var body: some View {
@@ -31,8 +31,8 @@ struct FrameImageView: View {
                 image
                     .resizable()
                     .frame(
-                        width: size.width(screenWidth),
-                        height: size.height(screenWidth)
+                        width: width,
+                        height: height
                     )
                     .clipped()
             case .failure(_):
@@ -40,16 +40,16 @@ struct FrameImageView: View {
                 Rectangle()
                     .fill(Color.gray.opacity(0.3))
                     .frame(
-                        width: size.width(screenWidth),
-                        height: size.height(screenWidth)
+                        width: width,
+                        height: height
                     )
             case .empty:
                 // TODO: ProgessView
                 Rectangle()
                     .fill(Color.gray.opacity(0.3))
                     .frame(
-                        width: size.width(screenWidth),
-                        height: size.height(screenWidth)
+                        width: width,
+                        height: height
                     )
             @unknown default:
                 // TODO: etc
