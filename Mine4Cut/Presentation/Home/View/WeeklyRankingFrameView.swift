@@ -9,18 +9,18 @@ import SwiftUI
 
 struct WeeklyRankingFrameView: View {
     let frameInfos: [FrameInfo] = FrameInfo.mockFrames
-    let parentSize: CGSize
+    
+    private let parentSize: CGSize
+    private let imageHeight: CGFloat
+    private let totalHeight: CGFloat
     
     init(parentSize: CGSize) {
         self.parentSize = parentSize
+        self.imageHeight  = FrameSize.medium.height(parentSize.width)
+        self.totalHeight = imageHeight + 44
     }
     
     var body: some View {
-        let imageHeight = FrameSize.medium.height(parentSize.width)
-        
-        // total: 44 + List height
-        let totalHeight = 44 + imageHeight 
-        
         VStack(
             alignment: .leading,
             spacing: 12

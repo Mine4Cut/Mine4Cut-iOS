@@ -8,20 +8,20 @@
 import SwiftUI
 
 struct TrendingFrameView: View {
-    // TODO: 서버로부터 받는 데잍
+    // TODO: 서버로부터 받는 데이터
     let frameInfos: [FrameInfo] = FrameInfo.mockFrames
-    let parentSize: CGSize
+    
+    private let parentSize: CGSize
+    private let rowHeight:CGFloat
+    private let totalHeight: CGFloat
     
     init(parentSize: CGSize) {
         self.parentSize = parentSize
+        self.rowHeight  = FrameSize.small.height(parentSize.width)
+        self.totalHeight  = 44 + (rowHeight + 5) * CGFloat(frameInfos.count)
     }
     
     var body: some View {
-        let rowHeight = FrameSize.small.height(parentSize.width)
-        
-        // total: 44 + List height
-        let totalHeight = 44 + (rowHeight + 5) * CGFloat(frameInfos.count)
-        
         VStack(
             alignment: .leading,
             spacing: 12

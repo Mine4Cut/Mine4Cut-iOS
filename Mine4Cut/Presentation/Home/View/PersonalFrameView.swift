@@ -9,19 +9,20 @@ import SwiftUI
 
 struct PersonalFrameView: View {
     let frameInfos: [FrameInfo] = FrameInfo.mockFrames
-    let parentSize: CGSize
+    
+    private let parentSize: CGSize
+    private let gridSpacing: CGFloat = 16
+    
+    private let columns = [
+        GridItem(.flexible(), spacing: 16),
+        GridItem(.flexible())
+    ]
     
     init(parentSize: CGSize) {
         self.parentSize = parentSize
     }
     
     var body: some View {
-        let columns = [
-            GridItem(.flexible(), spacing: 16),
-            GridItem(.flexible())
-        ]
-        
-        let gridSpacing: CGFloat = 16
         
         ScrollView(showsIndicators: false) {
             VStack(
