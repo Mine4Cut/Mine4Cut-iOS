@@ -27,19 +27,23 @@ struct WeeklyRankingFrameView: View {
             ) {
                 HStack(spacing: 12) {
                     ForEach(frameInfos.indices, id: \.self) { idx in
-                        FrameImageView(
-                            frame: frameInfos[idx],
-                            width: 100,
-                            height: 140
-                        )
-                        .overlay (
-                            Group {
-                                if idx >= 0 && idx <= 2 {
-                                    medalOverlay(for: idx)
-                                }
-                            },
-                            alignment: .bottomTrailing
-                        )
+                        NavigationLink {
+                            DetailView()
+                        } label: {
+                            FrameImageView(
+                                frame: frameInfos[idx],
+                                width: 100,
+                                height: 140
+                            )
+                            .overlay (
+                                Group {
+                                    if idx >= 0 && idx <= 2 {
+                                        medalOverlay(for: idx)
+                                    }
+                                },
+                                alignment: .bottomTrailing
+                            )
+                        }
                     }
                 }
             }

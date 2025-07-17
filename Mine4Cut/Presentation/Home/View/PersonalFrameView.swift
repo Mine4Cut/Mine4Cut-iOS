@@ -37,11 +37,15 @@ struct PersonalFrameView: View {
             
             LazyVGrid(columns: columns, spacing: 16) {
                 ForEach(frameInfos.indices, id: \.self) { idx in
-                    FrameImageView(
-                        frame: frameInfos[idx],
-                        width: itemWidth,
-                        height: itemHeight
-                    )
+                    NavigationLink {
+                        DetailView()
+                    } label: {
+                        FrameImageView(
+                            frame: frameInfos[idx],
+                            width: itemWidth,
+                            height: itemHeight
+                        )
+                    }
                 }
             }
         }
