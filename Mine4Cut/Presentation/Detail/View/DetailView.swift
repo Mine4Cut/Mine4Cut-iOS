@@ -6,18 +6,28 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct DetailView: View {
     @State private var currentImageIndex = 0
     @State private var isLiked: Bool = false
     @State private var likeCount: Int = 0
     
+    private let frameInfo: FrameInfo
+    // TODO: frameImages는 서버로부터 불러와야함
     private let frameImages = ["frame1", "frame2", "frame3", "frame4"]
     private let tags = ["연인과", "귀여운", "따듯한", "봄여름가을겨울"]
+
+    init(frameInfo: FrameInfo) {
+        self.frameInfo = frameInfo
+    }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            // (375*375) * 5
+        VStack(
+            alignment: .leading,
+            spacing: 0
+        ) {
+            // MARK: - Image Coursel
             TabView(selection: $currentImageIndex) {
                 ForEach(0..<frameImages.count, id: \.self) { idx in
                     Rectangle()
@@ -37,14 +47,14 @@ struct DetailView: View {
                         .tag(idx)
                 }
             }
-            .frame(height: 375)
+            .frame(height: 375) // FIX HEIGHT
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
             
-            // Indicator
+            // MARK: - Indicator
             HStack {
                 Spacer()
                 HStack(spacing: 8) {
-                    ForEach(0..<4, id: \.self) { index in
+                    ForEach(0..<frameImages.count, id: \.self) { index in
                         Circle()
                             .fill(currentImageIndex == index ? Color.primary : Color.gray.opacity(0.4))
                             .frame(width: 8, height: 8)
@@ -55,10 +65,14 @@ struct DetailView: View {
             .padding(.top, 12)
             .padding(.bottom, 20)
             
-            VStack(alignment: .leading, spacing: 16) {
+            // MARK: - Frame Info Text
+            VStack(
+                alignment: .leading,
+                spacing: 12
+            ) {
                 // 제목과 좋아요
                 HStack {
-                    Text("카카오프렌즈 어피치")
+                    Text(frameInfo.title)
                         .font(.title2)
                         .fontWeight(.bold)
                     
@@ -82,12 +96,12 @@ struct DetailView: View {
                 }
                 
                 // 작성자
-                Text("박성근")
+                Text(frameInfo.creator)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 
                 // 설명
-                Text("이 프레임은 어쩌구 저쩌구\n어떤 프레임이고 이걸 누구랑 찍는 걸 추천해")
+                Text(frameInfo.description)
                     .font(.body)
                     .foregroundColor(.primary)
                     .lineSpacing(2)
@@ -110,10 +124,11 @@ struct DetailView: View {
             }
             .padding(.horizontal, 20)
         }
+        .navigationTitle(frameInfo.title)
+        .navigationBarTitleDisplayMode(.inline)
         .safeAreaInset(edge: .bottom) {
             Button {
                 // TODO: 사진 찍기 액션
-                print("이 프레임으로 사진 찍기")
             } label: {
                 Text("이 프레임으로 사진 찍기")
                     .font(.headline)
@@ -121,15 +136,15 @@ struct DetailView: View {
                     .frame(maxWidth: .infinity)
                     .frame(height: 52)
                     .background(Color.blue)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
             }
-            .padding(.horizontal, 20)
-            .padding(.bottom, 8)
-            .background(Color(.systemBackground))
+            .padding()
         }
     }
 }
 
 #Preview {
-    DetailView()
+    NavigationView {
+        DetailView(frameInfo: FrameInfo.mockFrames[0])
+    }
 }

@@ -28,7 +28,7 @@ struct TrendingFrameView: View {
             List(frameInfos.indices, id: \.self) { idx in
                 ZStack {
                     // chevron을 제거하기 위해 ZStack으로 처리
-                    NavigationLink(destination: DetailView()) {
+                    NavigationLink(destination: DetailView(frameInfo: frameInfos[idx])) {
                         EmptyView()
                     }
                     .opacity(0)

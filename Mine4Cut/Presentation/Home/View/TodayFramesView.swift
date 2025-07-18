@@ -30,7 +30,7 @@ struct TodayFramesView: View {
                 HStack(spacing: 12) {
                     ForEach(frameInfos.indices, id: \.self) { index in
                         NavigationLink {
-                            DetailView()
+                            DetailView(frameInfo: frameInfos[index])
                         } label: {
                             FrameImageView(
                                 frame: frameInfos[index],
