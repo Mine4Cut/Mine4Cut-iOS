@@ -25,8 +25,7 @@ struct DetailView: View {
         "abcdefghijk",
         "zxcvbnm",
         "qwertyuiop",
-        "1111111111111121231231",
-        "ㅂㅈㄷㄱ쇼ㅕㅑㅐㄴㅇㄹ호ㅓㅏㅋㅌ"
+        "1111111111111121231231"
     ]
 
     // MARK: - Initializer
@@ -111,7 +110,7 @@ struct DetailView: View {
                         .foregroundColor(.primary)
                     
                     // MARK: - Tags Section
-                    FlowLayout(spacing: 8, lineSpacing: 8) {
+                    FlowLayout {
                         ForEach(tags, id: \.self) { tag in
                             Text(tag)
                                 .font(.body)
@@ -122,9 +121,6 @@ struct DetailView: View {
                                 .clipShape(Capsule())
                         }
                     }
-                    
-                    Spacer()
-                        .frame(height: 30)
                 }
                 .padding(.horizontal, 20)
             }
