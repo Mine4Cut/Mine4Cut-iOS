@@ -39,7 +39,7 @@ extension FrameInfo {
         FrameInfo(
             imageURL: "placeholder_\(idx+1)",
             title: "Frame \(idx+1)",
-            description: "Description \(idx+1)",
+            description: "Description \(idx+1)\n12345678901234567890",
             creator: "PSG \(idx+1)",
             downloads: idx,
             rank: idx
