@@ -10,7 +10,7 @@ import SwiftUI
 struct HomeView: View {
     var body: some View {
         // TODO: Navigation
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 0) {
                 // 커스텀 네비게이션 바
                 HStack {
