@@ -21,12 +21,10 @@ struct HomeView: View {
                     Spacer()
                     
                     HStack(spacing: 20) {
-                        Button(action: {
-                            // TODO: Search Action
-                        }) {
-                            Image(systemName: "magnifyingglass")
+                        NavigationLink(destination: SearchView()) {
+                            Image (systemName: "magnifyingglass")
                                 .font(.title2)
-                                .foregroundColor(.primary)
+                                .foregroundStyle(Color.primary)
                         }
                         
                         Button(action: {
