@@ -130,18 +130,10 @@ struct DetailView: View {
         .navigationTitle(frameInfo.title)
         .navigationBarTitleDisplayMode(.inline)
         .safeAreaInset(edge: .bottom) {
-            // MARK: - 공통 Button으로 추후 뺄 예쩡
-            Button {
-                // TODO: 사진 찍기 액션
-            } label: {
-                Text("이 프레임으로 사진 찍기")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 52)
-                    .background(Color.blue)
-                    .clipShape(RoundedRectangle(cornerRadius: 40))
+            PrimaryButton(title: "이 프레임으로 사진 찍기") {
+                // TODO: 사진 찍기로 이동
             }
+            .background(Color.white)
             .padding()
         }
     }
