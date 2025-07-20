@@ -24,7 +24,9 @@ struct DetailView: View {
         "Mine4Cut",
         "abcdefghijk",
         "zxcvbnm",
-        "qwertyuiop"
+        "qwertyuiop",
+        "1111111111111121231231",
+        "ㅂㅈㄷㄱ쇼ㅕㅑㅐㄴㅇㄹ호ㅓㅏㅋㅌ"
     ]
 
     // MARK: - Initializer
@@ -63,7 +65,7 @@ struct DetailView: View {
                             .tag(idx)
                     }
                 }
-                .frame(height: 375)
+                .frame(height: UIApplication.screenWidth)
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                 
                 // MARK: - FrameInfo
@@ -124,17 +126,19 @@ struct DetailView: View {
                     Spacer()
                         .frame(height: 30)
                 }
-                .padding(.horizontal, 20) // 좌우 패딩
+                .padding(.horizontal, 20)
             }
         }
         .navigationTitle(frameInfo.title)
         .navigationBarTitleDisplayMode(.inline)
         .safeAreaInset(edge: .bottom) {
-            PrimaryButton(title: "이 프레임으로 사진 찍기") {
-                // TODO: 사진 찍기로 이동
+            VStack {
+                PrimaryButton(title: "이 프레임으로 사진 찍기") {
+                    // TODO: 사진 찍기로 이동
+                }
             }
+            .padding([.bottom, .horizontal])
             .background(Color.white)
-            .padding()
         }
     }
 }

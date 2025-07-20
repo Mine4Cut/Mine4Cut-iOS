@@ -18,4 +18,21 @@ extension UIApplication {
     static let screenHeight: CGFloat = screenSize.height
     static let screenWidth: CGFloat = screenSize.width
     static let isMinimumSizeDevice: Bool = screenSize.height <= 667
+    
+    // MARK: - Safe Area Extensions
+    static var safeAreaInsets: UIEdgeInsets {
+        guard let windowScene = shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first else {
+            return UIEdgeInsets.zero
+        }
+        return window.safeAreaInsets
+    }
+    
+    static var bottomSafeAreaHeight: CGFloat {
+        return safeAreaInsets.bottom
+    }
+    
+    static var topSafeAreaHeight: CGFloat {
+        return safeAreaInsets.top
+    }
 }
