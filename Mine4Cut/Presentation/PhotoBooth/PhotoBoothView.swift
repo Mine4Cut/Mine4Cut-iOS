@@ -42,22 +42,33 @@ struct PhotoBoothView: View {
                 
                 // MARK: - Primary Button으로 대체 예정
                 Button {
-                    // TODO
+                    showingCamera = true
                 } label: {
-                    Text("사진 촬영하기")
+                    Text(allPhotosTaken ? "다시 촬영하기" : "사진 촬영하기")
                         .font(.headline)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: 49)
-                        .background(Color.blue)
+                        .background(allPhotosTaken ? Color.green : Color.blue)
                         .clipShape(RoundedRectangle(cornerRadius: 40))
                 }
                 .padding()
+                
+                // TODO: 완료 버튼
             }
             
         }
         .navigationTitle("사진사진")
         .navigationBarTitleDisplayMode(.inline)
+        .fullScreenCover(isPresented: $showingCamera) {
+            CameraView(capturedImages: $photoImages)
+        }
+    }
+    
+    // 모든 사진이 촬영되었는지 확인
+    // TODO: UI 수정까지
+    private var allPhotosTaken: Bool {
+        photoImages.allSatisfy { $0 != nil }
     }
     
     // 각 사진 프레임
@@ -74,9 +85,11 @@ struct PhotoBoothView: View {
                             .aspectRatio(contentMode: .fill)
                     } else {
                         // 빈 프레임 표시
-                        Text("\(index + 1)")
-                            .font(.system(size: 48, weight: .medium))
-                            .foregroundColor(.gray)
+                        VStack {
+                            Text("\(index + 1)")
+                                .font(.system(size: 48, weight: .medium))
+                                .foregroundColor(.gray)
+                        }
                     }
                 }
             )
