@@ -1,5 +1,5 @@
 //
-//  PhotoBoothView.swift
+//  CameraView.swift
 //  Mine4Cut
 //
 //  Created by 박성근 on 7/23/25.
