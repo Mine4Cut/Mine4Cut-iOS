@@ -14,54 +14,77 @@ struct PhotoBoothView: View {
     @State private var currentIndex = 0
     
     @State private var showingCamera = false
+    @State private var showingPermissionAlert = false
     
     var body: some View {
-        VStack(spacing: 0) {
-            // MARK: Title
-            HStack {
-                Text("나만의 네컷을 만드는 중입니다.")
-                    .font(.system(size: 24, weight: .bold))
-                    .foregroundStyle(Color.primary)
-                    .padding(.top)
-                Spacer()
-            }
-            .padding()
-            
-            // 2x2 그리드 (중앙 배치)
+        ZStack {
             VStack(spacing: 0) {
-                Spacer()
-                
-                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 2), spacing: 2) {
-                    ForEach(0..<4, id: \.self) { index in
-                        photoFrame(for: index)
-                    }
-                }
-                .padding(.horizontal)
-                
-                Spacer()
-                
-                // MARK: - Primary Button으로 대체 예정
-                Button {
-                    showingCamera = true
-                } label: {
-                    Text(allPhotosTaken ? "다시 촬영하기" : "사진 촬영하기")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 49)
-                        .background(allPhotosTaken ? Color.green : Color.blue)
-                        .clipShape(RoundedRectangle(cornerRadius: 40))
+                // MARK: Title
+                HStack {
+                    Text("나만의 네컷을 만드는 중입니다.")
+                        .font(.system(size: 24, weight: .bold))
+                        .foregroundStyle(Color.primary)
+                        .padding(.top)
+                    Spacer()
                 }
                 .padding()
                 
-                // TODO: 완료 버튼
+                // 2x2 그리드 (중앙 배치)
+                VStack(spacing: 0) {
+                    Spacer()
+                    
+                    LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 2), spacing: 2) {
+                        ForEach(0..<4, id: \.self) { index in
+                            photoFrame(for: index)
+                        }
+                    }
+                    .padding(.horizontal)
+                    
+                    Spacer()
+                    
+                    // MARK: - Primary Button으로 대체 예정
+                    Button {
+                        CameraView.checkCameraPermission { granted in
+                            if granted {
+                                showingCamera = true
+                            } else {
+                                showingPermissionAlert = true
+                            }
+                        }
+                    } label: {
+                        Text(allPhotosTaken ? "다시 촬영하기" : "사진 촬영하기")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 49)
+                            .background(allPhotosTaken ? Color.green : Color.blue)
+                            .clipShape(RoundedRectangle(cornerRadius: 40))
+                    }
+                    .padding()
+                    
+                    // TODO: 완료 버튼
+                }
+                
             }
-            
         }
         .navigationTitle("사진사진")
         .navigationBarTitleDisplayMode(.inline)
+        // TODO: 설정으로 이동
+        .alert("카메라 권한이 필요합니다", isPresented: $showingPermissionAlert) {
+            Button("확인", role: .cancel) {}
+        } message: {
+            Text("설정에서 카메라 권한을 허용해주세요.")
+        }
         .fullScreenCover(isPresented: $showingCamera) {
-            CameraView(capturedImages: $photoImages)
+            CameraView(sourceType: .camera) { image in
+                if let image = image {
+                    if let idx = photoImages.firstIndex(where: { $0 == nil }) {
+                        photoImages[idx] = image
+                    }
+                }
+                showingCamera = false
+            }
+            .background(.black)
         }
     }
     
